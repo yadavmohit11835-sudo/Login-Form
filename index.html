@@ -1,16 +1,340 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Form</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Auth — Login & Register</title>
+  <meta name="description" content="A futuristic, responsive, glassmorphic login and registration portal.">
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <form>
-        <input type="username" placeholder="Username"> <br><br>
-        <input type="email" placeholder="Email"> <br><br>
-        <input type="password" placeholder="password"> <br><br>
-        <input type="submit" login="value">
-    </form>
+  <!-- Ambient background glow orbs -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <!-- Top Navigation / Controls -->
+  <header class="top-nav">
+    <div class="brand-badge">
+      <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+      </svg>
+      <span>ModernAuth</span>
+    </div>
+
+    <button id="themeToggleBtn" class="icon-btn" aria-label="Toggle theme" title="Toggle Light/Dark Theme">
+      <!-- Sun Icon -->
+      <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <!-- Moon Icon -->
+      <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Main Container -->
+  <main class="auth-wrapper">
+    <div class="glass-card" id="cardContainer">
+      <!-- Tab Switcher -->
+      <div class="tab-slider" role="tablist">
+        <div class="slider-indicator" id="sliderIndicator"></div>
+        <button type="button" class="tab-btn active" id="loginTabBtn" role="tab" aria-selected="true" aria-controls="loginFormSection">
+          Sign In
+        </button>
+        <button type="button" class="tab-btn" id="registerTabBtn" role="tab" aria-selected="false" aria-controls="registerFormSection">
+          Create Account
+        </button>
+      </div>
+
+      <!-- Forms Track (Sliding Horizontal Track) -->
+      <div class="forms-track" id="formsTrack">
+        
+        <!-- ================= LOGIN SECTION ================= -->
+        <section class="form-section" id="loginFormSection">
+          <div class="form-header">
+            <h2>Welcome back</h2>
+            <p>Please enter your details to sign in.</p>
+          </div>
+
+          <!-- Social Buttons -->
+          <div class="social-auth-group">
+            <button type="button" class="social-btn google-btn" onclick="mockSocialAuth('Google')">
+              <svg viewBox="0 0 24 24" width="18" height="18">
+                <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+                <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.35 24 12 24z"/>
+                <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+                <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.35 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+              </svg>
+              <span>Google</span>
+            </button>
+            <button type="button" class="social-btn github-btn" onclick="mockSocialAuth('GitHub')">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+              </svg>
+              <span>GitHub</span>
+            </button>
+          </div>
+
+          <div class="divider">
+            <span>or sign in with email</span>
+          </div>
+
+          <form id="loginForm" novalidate>
+            <!-- Email / Username -->
+            <div class="form-group">
+              <label for="loginEmail">Email address</label>
+              <div class="input-wrapper">
+                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <input 
+                  type="email" 
+                  id="loginEmail" 
+                  placeholder="name@example.com" 
+                  autocomplete="email"
+                  required
+                >
+              </div>
+              <span class="error-msg" id="loginEmailError"></span>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+              <div class="label-row">
+                <label for="loginPassword">Password</label>
+                <button type="button" class="text-link forgot-btn" id="openForgotModal">Forgot?</button>
+              </div>
+              <div class="input-wrapper">
+                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                <input 
+                  type="password" 
+                  id="loginPassword" 
+                  placeholder="••••••••" 
+                  autocomplete="current-password"
+                  required
+                >
+                <button type="button" class="eye-toggle" data-target="loginPassword" aria-label="Toggle password view">
+                  <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  <svg class="eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                </button>
+              </div>
+              <span class="error-msg" id="loginPasswordError"></span>
+            </div>
+
+            <!-- Remember me & Actions -->
+            <div class="checkbox-row">
+              <label class="custom-checkbox">
+                <input type="checkbox" id="rememberMe">
+                <span class="checkmark"></span>
+                <span class="checkbox-text">Remember me for 30 days</span>
+              </label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="primary-btn" id="loginSubmitBtn">
+              <span class="btn-text">Sign In</span>
+              <div class="spinner"></div>
+            </button>
+          </form>
+
+          <div class="form-footer">
+            <span>Don't have an account?</span>
+            <button type="button" class="switch-link" onclick="switchTab('register')">Sign up now</button>
+          </div>
+        </section>
+
+
+        <!-- ================= REGISTER SECTION ================= -->
+        <section class="form-section" id="registerFormSection">
+          <div class="form-header">
+            <h2>Create an account</h2>
+            <p>Start your journey in seconds with us.</p>
+          </div>
+
+          <form id="registerForm" novalidate>
+            <!-- Full Name -->
+            <div class="form-group">
+              <label for="regName">Full name</label>
+              <div class="input-wrapper">
+                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <input 
+                  type="text" 
+                  id="regName" 
+                  placeholder="Mohit Yadav" 
+                  autocomplete="name"
+                  required
+                >
+              </div>
+              <span class="error-msg" id="regNameError"></span>
+            </div>
+
+            <!-- Email Address -->
+            <div class="form-group">
+              <label for="regEmail">Email address</label>
+              <div class="input-wrapper">
+                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <input 
+                  type="email" 
+                  id="regEmail" 
+                  placeholder="name@example.com" 
+                  autocomplete="email"
+                  required
+                >
+              </div>
+              <span class="error-msg" id="regEmailError"></span>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+              <label for="regPassword">Password</label>
+              <div class="input-wrapper">
+                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                <input 
+                  type="password" 
+                  id="regPassword" 
+                  placeholder="At least 8 characters" 
+                  autocomplete="new-password"
+                  required
+                >
+                <button type="button" class="eye-toggle" data-target="regPassword" aria-label="Toggle password view">
+                  <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  <svg class="eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Password Strength Meter -->
+              <div class="strength-meter-container" id="strengthMeterContainer">
+                <div class="strength-meter-bar">
+                  <div class="strength-progress" id="strengthProgress"></div>
+                </div>
+                <div class="strength-text-row">
+                  <span class="strength-label">Security:</span>
+                  <span class="strength-value" id="strengthValue">Too weak</span>
+                </div>
+              </div>
+              <span class="error-msg" id="regPasswordError"></span>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+              <label for="regConfirmPassword">Confirm password</label>
+              <div class="input-wrapper">
+                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+                <input 
+                  type="password" 
+                  id="regConfirmPassword" 
+                  placeholder="Repeat your password" 
+                  autocomplete="new-password"
+                  required
+                >
+              </div>
+              <span class="error-msg" id="regConfirmError"></span>
+            </div>
+
+            <!-- Terms Checkbox -->
+            <div class="checkbox-row">
+              <label class="custom-checkbox">
+                <input type="checkbox" id="termsAgree" required>
+                <span class="checkmark"></span>
+                <span class="checkbox-text">I agree to the <a href="#privacy" class="text-link" onclick="mockTerms(event)">Terms & Privacy Policy</a></span>
+              </label>
+              <span class="error-msg" id="termsError"></span>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="primary-btn" id="registerSubmitBtn">
+              <span class="btn-text">Create Account</span>
+              <div class="spinner"></div>
+            </button>
+          </form>
+
+          <div class="form-footer">
+            <span>Already have an account?</span>
+            <button type="button" class="switch-link" onclick="switchTab('login')">Sign in</button>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ================= FORGOT PASSWORD MODAL ================= -->
+  <div class="modal-overlay" id="forgotModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="icon-bubble">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>
+          </svg>
+        </div>
+        <button type="button" class="modal-close" id="closeForgotModal" aria-label="Close dialog">&times;</button>
+      </div>
+      <h3>Reset your password</h3>
+      <p>Enter the email associated with your account, and we'll send you an instant reset link.</p>
+      
+      <form id="forgotForm">
+        <div class="form-group">
+          <div class="input-wrapper">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <input type="email" id="forgotEmail" placeholder="your-email@example.com" required>
+          </div>
+          <span class="error-msg" id="forgotEmailError"></span>
+        </div>
+        <button type="submit" class="primary-btn" id="forgotSubmitBtn">
+          <span class="btn-text">Send Reset Link</span>
+          <div class="spinner"></div>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <script src="script.js"></script>
 </body>
 </html>
